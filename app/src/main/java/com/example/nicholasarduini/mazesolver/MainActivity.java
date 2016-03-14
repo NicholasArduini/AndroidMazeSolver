@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -59,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
     private static int recursiveCalls = 0;
 
     private static Random mRandom = new Random();
+
+    private static Toast toast;
+    private static String noSolutionText = "No solution";
 
     private void delay() {
         try {
@@ -176,6 +181,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean result) {
+            if(solutionPathIDS.isEmpty()){
+                toast.show();
+            }
             recursiveCalls = 0;
             working = false;
         }
@@ -188,6 +196,9 @@ public class MainActivity extends AppCompatActivity {
 
         solveBtn = (Button) findViewById(R.id.solveBtn);
         clearBtn = (Button) findViewById(R.id.clearBtn);
+
+        //no solution toast
+        toast = Toast.makeText(getApplicationContext(), noSolutionText, Toast.LENGTH_SHORT);
 
         //set the right and left borders
         for(int i = 0; i < rows; i++){
